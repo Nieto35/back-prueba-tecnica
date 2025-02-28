@@ -166,3 +166,9 @@
 2025-02-28 18:47:17,255 INFO spawned: 'php-fpm' with pid 261
 2025-02-28 18:47:18,376 INFO success: horizon entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2025-02-28 18:47:18,376 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-02-28 19:14:14,042 INFO supervisord started with pid 1
+2025-02-28 19:14:15,045 INFO spawned: 'horizon' with pid 272
+2025-02-28 19:14:15,048 INFO spawned: 'php-fpm' with pid 273
+2025-02-28 19:14:16,216 INFO success: horizon entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-02-28 19:14:16,216 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-02-28 19:15:03,275 INFO reaped unknown pid 323 (exit status 0)
