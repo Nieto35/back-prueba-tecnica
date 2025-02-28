@@ -7,19 +7,19 @@ use Project\Auth\Domain\ValueObject\Date;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;
 use Project\Auth\Domain\ValueObject\Password;
-use Project\Auth\Domain\ValueObject\UserId;
+use Project\Auth\Domain\ValueObject\Token;
 use App\Models\User as UserModel;
 
 class User
 {
-    private UserId $id;
+    private Token $id;
     private Name $name;
     private Email $email;
     private Password $password;
     private Date $emailVerifiedAt;
 
     public function __construct(
-        UserId $id,
+        Token $id,
         Name $name,
         Email $email,
         Password $password,
@@ -38,7 +38,7 @@ class User
     public static function fromEloquentModel(UserModel $model): self
     {
         return new self(
-            new UserId($model->id),
+            new Token($model->id),
             new Name($model->name),
             new Email($model->email),
             new Password($model->password),
@@ -46,7 +46,7 @@ class User
         );
     }
 
-    public function getId(): UserId
+    public function getId(): Token
     {
         return $this->id;
     }

@@ -11,7 +11,7 @@ use Project\Auth\Domain\ValueObject\Date;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;
 use Project\Auth\Domain\ValueObject\Password;
-use Project\Auth\Domain\ValueObject\UserId;
+use Project\Auth\Domain\ValueObject\Token;
 use Ramsey\Uuid\Uuid;
 use Project\Auth\Domain\Mail\UserEmailSender;
 class SignInAction
@@ -36,7 +36,7 @@ class SignInAction
         if ($user) {
             throw new UserExistException("User already exists");
         }
-        $id = new UserId(Uuid::uuid4()->toString());
+        $id = new Token(Uuid::uuid4()->toString());
         $date = new Date(null);
         $user = new User($id, $name, $email, $password, $date);
         $this->userRepository->create($user);
