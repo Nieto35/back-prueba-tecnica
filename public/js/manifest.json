@@ -1,0 +1,27 @@
+{
+  "_client.js": {
+    "file": "client/client.js",
+    "name": "client"
+  },
+  "resources/js/app/index.jsx": {
+    "file": "app/index.js",
+    "name": "app",
+    "src": "resources/js/app/index.jsx",
+    "isEntry": true,
+    "imports": [
+      "_client.js"
+    ]
+  },
+  "resources/js/auth/index.jsx": {
+    "file": "auth/index.js",
+    "name": "auth",
+    "src": "resources/js/auth/index.jsx",
+    "isEntry": true,
+    "imports": [
+      "_client.js"
+    ],
+    "css": [
+      "assets/auth.css"
+    ]
+  }
+}

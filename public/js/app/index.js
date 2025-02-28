@@ -1,0 +1,1 @@
+import{j as e,R as t,a as o}from"../client/client.js";function r(){return e.jsx("div",{children:e.jsx("h1",{children:"Hello, React!"})})}const c=t.createRoot(document.getElementById("root"));c.render(e.jsx(o.StrictMode,{children:e.jsx(r,{})}));

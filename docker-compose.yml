@@ -1,0 +1,113 @@
+version: "3"
+
+name: project
+
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: project_nginx
+    depends_on:
+      - php
+    volumes:
+      - ${HOST_ROOT}/www/project:/var/www/html
+      - ${HOST_ROOT}/www/project/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ${HOST_ROOT}/www/project/docker/nginx/project.local.conf:/etc/nginx/conf.d/project.local.conf
+    expose:
+      - 80
+    networks:
+      - local-network
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "project_mailhog"
+    ports:
+      - 8025:8025
+    networks:
+      - local-network
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php8.2-fpm/Dockerfile
+    user: 1000:1000
+    container_name: project_php
+    depends_on:
+        - mariadb
+        - redis
+    volumes:
+      - ${HOST_ROOT}/www/project:/var/www/html
+      - ${HOST_ROOT}/www/project/docker/php8.2-fpm/conf.d/99-xdebug.ini:/usr/local/etc/php/conf.d/99-xdebug.ini
+    expose:
+      - 9000
+    networks:
+      - local-network
+    command: sh -c "/var/www/html/wait-for-it.sh project_mariadb:3306 -- composer install && supervisord -c /etc/supervisor/conf.d/supervisord.conf"
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: project_redis
+    expose:
+      - 6379
+    networks:
+      - local-network
+
+  mariadb:
+    image: mariadb:10.5.25
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    container_name: project_mariadb
+    stop_grace_period: 30s
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: project
+      MARIADB_USER: project
+      MARIADB_PASSWORD: password
+    volumes:
+      - ${HOST_ROOT}/www/project/docker/mariadb-init:/docker-entrypoint-initdb.d
+    expose:
+      - 3306
+    ports:
+      - 33061:3306
+    networks:
+      - local-network
+
+  node:
+    image: node:22.5.1
+    user: 1000:1000
+    container_name: project_node
+    working_dir: /var/www/html
+    volumes:
+      - ${HOST_ROOT}/www/project:/var/www/html
+    expose:
+      - 3000
+    networks:
+      - local-network
+    stdin_open: true
+    tty: true
+    command: sh -c "npm install && npm run build && tail -f /dev/null"
+
+  minio:
+    image: minio/minio
+    user: 1000:1000
+    container_name: projectminio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ${HOST_ROOT}/www/project/storage/s3:/data
+    ports:
+      - "9010:9000" # Puerto para la API S3
+      - "9011:9001" # Puerto para la consola de administración
+    entrypoint: sh
+    command: -c 'mkdir -p /data/project && minio server /data --console-address ":9001"'
+    networks:
+      - local-network
+
+
+networks:
+  local-network:
+    external: true
+    name: local-proxy_local-network
+
