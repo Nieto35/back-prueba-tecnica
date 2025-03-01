@@ -49,5 +49,4 @@ Ensure you have the following entries in your `hosts` file:
 ```plaintext
 127.0.0.1 app.project.local
 127.0.0.1 auth.project.local
-127.0.0.1 projectminio
 ```
