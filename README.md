@@ -9,6 +9,13 @@ This approach helps maintain control over the data.
 I am not using Request->validate. I couldn't create my own Request class because Scramble 
 wouldn't recognize it unless it extended the typical Laravel request.
 
+## Spotify API Documentation
+
+This project utilizes the Spotify Web API documentation to establish a connection and interact with 
+Spotify's services. For more information, please refer to the official documentation:
+
+- [https://developer.spotify.com/documentation/web-api](https://developer.spotify.com/documentation/web-api)
+
 ## Accessing the API Documentation
 
 ```bash
