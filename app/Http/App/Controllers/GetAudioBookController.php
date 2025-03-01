@@ -35,6 +35,9 @@ class GetAudioBookController
      * envio captura de pantalla adjunta a correo.
      *
      *  IMPORTANT: A token obtained from the auth login is required.
+     *
+     *   Valid markets: AD, AL, AM, BA, BE, BG, BY, CW, CY, CZ, DK, EE, ES, FI, FR, GB, GE, GR, HR, HU, IE, IL, IS,
+     *  IT, KG, KZ, LI, LT, LU, LV, MC, MD, ME, MK, MT, NL, NO, PL, PT, RO, RS, SE, SI, SK, SM, TJ, TR, UA, UZ, XK
      */
     #[PathParameter('id', required: true, type: 'string', example: "7iHfbu1YPACw6oZPAFJtqe")]
     #[QueryParameter('market', type: 'string',default: "ES" ,example: "ES")]
