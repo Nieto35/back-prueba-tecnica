@@ -1,6 +1,14 @@
 # Project Overview for SDi. Digital Group
 This project is designed to establish a connection with Spotify and provide an authentication method. It allows users to interact with Spotify's API to retrieve various data, such as artist albums, while ensuring secure access through authentication.
 
+## Note
+
+Data validations for the request are performed in the respective value object classes. 
+This approach helps maintain control over the data. 
+
+I am not using Request->validate. I couldn't create my own Request class because Scramble 
+wouldn't recognize it unless it extended the typical Laravel request.
+
 ## Accessing the API Documentation
 
 ```bash

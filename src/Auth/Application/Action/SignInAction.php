@@ -3,7 +3,7 @@
 namespace Project\Auth\Application\Action;
 
 use Project\Auth\Domain\Exception\FailedToCreateException;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\Exception\UserExistException;
 use Project\Auth\Domain\Repository\UserRepository;
 use Project\Auth\Domain\Aggregate\User;

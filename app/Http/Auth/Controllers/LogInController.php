@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Project\Auth\Application\Action\LogInAction;
 use Project\Auth\Domain\Exception\FailedCacheException;
 use Project\Auth\Domain\Exception\FailedLogInException;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Password;
 use Dedoc\Scramble\Attributes\QueryParameter;

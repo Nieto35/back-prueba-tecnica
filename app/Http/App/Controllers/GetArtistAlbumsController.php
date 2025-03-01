@@ -13,7 +13,7 @@ use Project\App\Domain\ValueObject\Groups;
 use Project\App\Domain\ValueObject\Limit;
 use Project\App\Domain\ValueObject\Market;
 use Project\App\Domain\ValueObject\Offset;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\ValueObject\Token;
 use Project\Shared\Domain\Exception\ArtistNotFoundException;
 use Project\Shared\Domain\Exception\BadOAuthRequestException;
@@ -42,10 +42,10 @@ class GetArtistAlbumsController
         try {
             $artistId = new ArtistId($id);
             $token = new Token($request->bearerToken());
-            $groups = $request->query('include_groups') ? new Groups($request->query('include_groups')) : null;
-            $market = $request->query('market') ? new Market($request->query('market')) : null;
-            $limit = $request->query('limit') ? new Limit((int)$request->query('limit')) : null;
-            $offset = $request->query('offset') ? new Offset((int)$request->query('offset')) : null;
+            $groups = new Groups($request->query('include_groups'));
+            $market = new Market($request->query('market'));
+            $limit = new Limit($request->query('limit'));
+            $offset = new Offset($request->query('offset'));
             $data = $action->execute($artistId, $token, $groups, $market, $limit, $offset);
         }catch (InvalidArgumentException $e) {
             return response()->json(['error' => $e->getMessage()], 400);

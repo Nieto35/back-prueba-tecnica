@@ -4,7 +4,7 @@ namespace Project\Auth\Domain\Repository;
 
 use Project\Auth\Domain\Aggregate\User;
 use Project\Auth\Domain\Exception\FailedToCreateException;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\ValueObject\Email;
 
 interface UserRepository

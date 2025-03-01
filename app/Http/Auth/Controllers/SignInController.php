@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Project\Auth\Application\Action\SignInAction;
 use Project\Auth\Domain\Exception\FailedToCreateException;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\Exception\UserExistException;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;

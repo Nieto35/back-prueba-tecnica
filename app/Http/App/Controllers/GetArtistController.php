@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Project\App\Application\Action\GetArtistAction;
 use Project\App\Domain\ValueObject\ArtistId;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\ValueObject\Token;
 use Project\Shared\Domain\Exception\ArtistNotFoundException;
 use Project\Shared\Domain\Exception\BadOAuthRequestException;

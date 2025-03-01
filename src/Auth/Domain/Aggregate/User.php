@@ -2,7 +2,7 @@
 
 namespace Project\Auth\Domain\Aggregate;
 
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\ValueObject\Date;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;

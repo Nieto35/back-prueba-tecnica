@@ -4,7 +4,7 @@ namespace Project\Auth\Infrastructure\Repository;
 
 use Project\Auth\Domain\Aggregate\User;
 use Project\Auth\Domain\Exception\FailedToCreateException;
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\Repository\UserRepository;
 use App\Models\User as UserEloquent;
 use Exception;

@@ -2,7 +2,7 @@
 
 namespace Project\Auth\Domain\ValueObject;
 
-use Project\Auth\Domain\Exception\InvalidArgumentException;
+use Project\Shared\Domain\Exception\InvalidArgumentException;
 
 class Email
 {
@@ -11,7 +11,7 @@ class Email
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(string $email)
+    public function __construct($email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException("Invalid email format: $email");

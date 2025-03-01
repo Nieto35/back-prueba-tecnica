@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Auth\Domain\Exception;
+namespace Project\Shared\Domain\Exception;
 class InvalidArgumentException extends \Exception
 {
 

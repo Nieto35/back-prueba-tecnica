@@ -2,12 +2,20 @@
 
 namespace Project\Auth\Domain\ValueObject;
 
+use Project\Shared\Domain\Exception\InvalidArgumentException;
+
 class Name
 {
     private string $name;
 
-    public function __construct(string $name)
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function __construct($name)
     {
+        if (!is_string($name)) {
+            throw new InvalidArgumentException("Name must be a string.");
+        }
         $this->name = $name;
     }
 
