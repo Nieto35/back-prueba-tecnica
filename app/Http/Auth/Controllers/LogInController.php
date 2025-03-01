@@ -16,6 +16,9 @@ class LogInController
 
     #[QueryParameter('email', required: true, type: 'string', format: 'email', example: "user@example.com")]
     #[QueryParameter('password', required: true, type: 'string', example: "password123")]
+    /**
+     * @unauthenticated
+     */
     public function __invoke(Request $request, LogInAction $action): JsonResponse
     {
         try {

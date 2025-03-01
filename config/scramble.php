@@ -77,7 +77,10 @@ return [
      * ],
      * ```
      */
-    'servers' => null,
+    'servers' => [
+        'Auth Server' =>  env('FRONTEND_DISCOVERY_AUTH', sprintf('auth.%s', config('app.domain'))),
+        'App Server' => env('FRONTEND_DISCOVERY_APP', sprintf('app.%s', config('app.domain'))),
+    ],
 
     'middleware' => [
         'web',

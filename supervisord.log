@@ -172,3 +172,18 @@
 2025-02-28 19:14:16,216 INFO success: horizon entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2025-02-28 19:14:16,216 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2025-02-28 19:15:03,275 INFO reaped unknown pid 323 (exit status 0)
+2025-02-28 23:37:51,937 INFO supervisord started with pid 1
+2025-02-28 23:37:52,942 INFO spawned: 'horizon' with pid 36
+2025-02-28 23:37:52,944 INFO spawned: 'php-fpm' with pid 37
+2025-02-28 23:37:54,085 INFO success: horizon entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-02-28 23:37:54,085 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-02-28 23:37:59,091 WARN received SIGQUIT indicating exit request
+2025-02-28 23:37:59,092 INFO waiting for horizon, php-fpm to die
+2025-02-28 23:37:59,095 INFO stopped: php-fpm (exit status 0)
+2025-02-28 23:38:02,099 INFO waiting for horizon to die
+2025-02-28 23:38:02,117 INFO stopped: horizon (exit status 0)
+2025-02-28 23:38:37,604 INFO supervisord started with pid 1
+2025-02-28 23:38:38,608 INFO spawned: 'horizon' with pid 38
+2025-02-28 23:38:38,610 INFO spawned: 'php-fpm' with pid 39
+2025-02-28 23:38:40,137 INFO success: horizon entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-02-28 23:38:40,137 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
