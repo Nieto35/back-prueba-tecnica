@@ -8,7 +8,9 @@ use Dedoc\Scramble\Attributes\PathParameter;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Project\App\Application\Action\GetAlbumAction;
 use Project\App\Application\Action\GetAudiobookAction;
+use Project\App\Domain\ValueObject\AlbumId;
 use Project\App\Domain\ValueObject\AudioBookId;
 use Project\App\Domain\ValueObject\Market;
 use Project\Shared\Domain\Exception\InvalidArgumentException;
@@ -20,32 +22,25 @@ use Project\Shared\Domain\Exception\FailedSpotifyConnection;
 use Project\Shared\Domain\Exception\RateLimitExceededException;
 
 
-#[Group('AudioBook')]
-class GetAudioBookController
+#[Group('Album')]
+class GetAlbumController
 {
     /**
-     * Get AudioBook (SPOTIFY TIENE ERROR EN ESTE ENDPOINT -.-!!!).
+     * Get Album
      *
-     * La API COMPLETA DE AUDIO BOOKS FALLA
-     * Hacer prueba, ninguna prueba funciona ni en la pagina de spotify en audio libros, siempre da error.
-     * adjunto enlace de documentacion:
-     * https://developer.spotify.com/documentation/web-api/reference/get-an-audiobook
-     * =C
-     * capturo error de servidor claramente!
-     * envio captura de pantalla adjunta a correo.
      *
      *  IMPORTANT: A token obtained from the auth login is required.
      */
-    #[PathParameter('id', required: true, type: 'string', example: "7iHfbu1YPACw6oZPAFJtqe")]
+    #[PathParameter('id', required: true, type: 'string', example: "4aawyAB9vmqN3uQ7FjRGTy")]
     #[QueryParameter('market', type: 'string',default: "ES" ,example: "ES")]
-    public function __invoke(string $id, Request $request, GetAudiobookAction $action): JsonResponse
+    public function __invoke(string $id, Request $request, GetAlbumAction $action): JsonResponse
     {
         try {
             $market = new Market($request->query('market'));
-            $audioBookId= new AudioBookId($id);
+            $albumId= new AlbumId($id);
             $authorizationHeader = $request->header('Authorization');
             $token = new Token(str_replace('Bearer ', '', $authorizationHeader));
-            $data = $action->execute($audioBookId, $token, $market);
+            $data = $action->execute($albumId, $token, $market);
         } catch (InvalidArgumentException $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         } catch (ArtistNotFoundException $e) {

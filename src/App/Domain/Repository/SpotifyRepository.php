@@ -3,6 +3,7 @@
 namespace Project\App\Domain\Repository;
 
 
+use Project\App\Domain\ValueObject\AlbumId;
 use Project\App\Domain\ValueObject\ArtistId;
 use Project\App\Domain\ValueObject\AudioBookId;
 use Project\App\Domain\ValueObject\Groups;
@@ -42,4 +43,13 @@ interface SpotifyRepository
      * @throws FailedSpotifyConnection
      */
     public function getAudioBook(AudioBookId $audioBookId, string $spotifyToken, Market $market): array;
+
+    /**
+     * @throws BadOrExpiredTokenException
+     * @throws ArtistNotFoundException
+     * @throws BadOAuthRequestException
+     * @throws RateLimitExceededException
+     * @throws FailedSpotifyConnection
+     */
+    public function getAlbum(AlbumId $albumId, string $spotifyToken, Market $market): array;
 }
