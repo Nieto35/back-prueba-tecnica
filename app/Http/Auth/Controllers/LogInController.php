@@ -2,6 +2,7 @@
 
 namespace App\Http\Auth\Controllers;
 
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Project\Auth\Application\Action\LogInAction;
@@ -13,14 +14,19 @@ use Project\Auth\Domain\ValueObject\Password;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Project\Shared\Domain\Exception\FailedSpotifyConnection;
 
+#[Group('Auth')]
 class LogInController
 {
-
-    #[QueryParameter('email', required: true, type: 'string', format: 'email', example: "user@example.com")]
-    #[QueryParameter('password', required: true, type: 'string', example: "password123")]
     /**
+     * Log in.
+     *
+     * Necessary to make any request, generates the Spotify token and application token.
+     * The user must have previously registered, and the user is stored in the database.
+     *
      * @unauthenticated
      */
+    #[QueryParameter('email', required: true, type: 'string', format: 'email', example: "user@example.com")]
+    #[QueryParameter('password', required: true, type: 'string', example: "password123")]
     public function __invoke(Request $request, LogInAction $action): JsonResponse
     {
         try {

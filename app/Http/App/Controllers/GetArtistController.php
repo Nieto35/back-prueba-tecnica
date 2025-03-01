@@ -3,6 +3,7 @@
 namespace App\Http\App\Controllers;
 
 
+use Dedoc\Scramble\Attributes\Group;
 use Dedoc\Scramble\Attributes\PathParameter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,8 +18,14 @@ use Project\Shared\Domain\Exception\FailedSpotifyConnection;
 use Project\Shared\Domain\Exception\RateLimitExceededException;
 
 
+#[Group('Artist')]
 class GetArtistController
 {
+    /**
+     * Get artist.
+     *
+     * Retrieves the information of an artist by their ID.
+     */
     #[PathParameter('id', required: true, type: 'string', example: "7GQDI5Vmxs92RsIRZzYT11")]
     public function __invoke(string $id, Request $request, GetArtistAction $action): JsonResponse
     {

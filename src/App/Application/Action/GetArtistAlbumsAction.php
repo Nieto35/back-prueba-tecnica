@@ -3,10 +3,13 @@
 namespace Project\App\Application\Action;
 
 
-use Illuminate\Support\Facades\Cache;
 use Project\App\Domain\Repository\SpotifyRepository;
 use Project\App\Domain\Service\TokenInformationService;
 use Project\App\Domain\ValueObject\ArtistId;
+use Project\App\Domain\ValueObject\Groups;
+use Project\App\Domain\ValueObject\Limit;
+use Project\App\Domain\ValueObject\Market;
+use Project\App\Domain\ValueObject\Offset;
 use Project\Auth\Domain\ValueObject\Token;
 use Project\Shared\Domain\Exception\ArtistNotFoundException;
 use Project\Shared\Domain\Exception\BadOAuthRequestException;
@@ -14,7 +17,7 @@ use Project\Shared\Domain\Exception\BadOrExpiredTokenException;
 use Project\Shared\Domain\Exception\FailedSpotifyConnection;
 use Project\Shared\Domain\Exception\RateLimitExceededException;
 
-class GetArtistAction
+class GetArtistAlbumsAction
 {
 
     private SpotifyRepository $spotifyRepository;
@@ -26,16 +29,22 @@ class GetArtistAction
     }
 
     /**
-     * @throws BadOrExpiredTokenException
      * @throws ArtistNotFoundException
+     * @throws BadOrExpiredTokenException
      * @throws BadOAuthRequestException
      * @throws RateLimitExceededException
      * @throws FailedSpotifyConnection
      */
-    public function execute(ArtistId $artistId, Token $token): array
-    {
+    public function execute(
+        ArtistId $artistId,
+        Token $token,
+        ?Groups $groups,
+        ?Market $market,
+        ?Limit $limit,
+        ?Offset $offset
+    ): array {
         $spotifyToken = $this->tokenInformationService->getSpotifyToken($token);
-        return $this->spotifyRepository->getArtist($artistId, $spotifyToken);
+        return $this->spotifyRepository->getArtistAlbums($artistId, $spotifyToken, $groups?->toString(), $market?->toString(), $limit?->toInt(), $offset?->toInt());
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Auth\Controllers;
 
+use Dedoc\Scramble\Attributes\Group;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,14 +14,19 @@ use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;
 use Project\Auth\Domain\ValueObject\Password;
 
+#[Group('Auth')]
 class SignInController
 {
+    /**
+     * Sign in.
+     *
+     * Necessary for using the application, the user must register and have a user in the database to make any subsequent requests.
+     *
+     * @unauthenticated
+     */
     #[QueryParameter('email', required: true, type: 'string', format: 'email', example: "user@example.com")]
     #[QueryParameter('password', required: true, type: 'string', example: "password123")]
     #[QueryParameter('name', required: true, type: 'string', example: "Pepito Perez")]
-    /**
-     * @unauthenticated
-     */
     public function __invoke(Request $request, SignInAction $action): JsonResponse
     {
         try {

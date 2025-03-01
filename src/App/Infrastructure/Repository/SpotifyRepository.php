@@ -35,4 +35,31 @@ class SpotifyRepository implements SpotifyRepositoryInterface
 
     }
 
+    /**
+     * @throws BadOrExpiredTokenException
+     * @throws ArtistNotFoundException
+     * @throws BadOAuthRequestException
+     * @throws RateLimitExceededException
+     * @throws FailedSpotifyConnection
+     */
+    public function getArtistAlbums(ArtistId $artistId, string $spotifyToken, ?string $groups, ?string $market, ?int $limit, ?int $offset): array
+    {
+        $url = 'https://api.spotify.com/v1/artists/' . $artistId->toString() . '/albums';
+        $params = [];
+        if ($groups) {
+            $params['groups'] = $groups;
+        }
+        if ($market) {
+            $params['market'] = $market;
+        }
+        if ($limit) {
+            $params['limit'] = $limit;
+        }
+        if ($offset) {
+            $params['offset'] = $offset;
+        }
+
+        return $this->httpApiSpotify->get($url, $spotifyToken, $params);
+    }
+
 }

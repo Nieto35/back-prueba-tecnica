@@ -56,7 +56,7 @@ class HttpApiSpotify implements HttpApiSpotifyInterface
      * @throws RateLimitExceededException
      * @throws FailedSpotifyConnection
      */
-    public function get(string $url, string $spotifyToken): array
+    public function get(string $url, string $spotifyToken, array $params = []): array
     {
         try {
             $client = new Client();
@@ -64,6 +64,7 @@ class HttpApiSpotify implements HttpApiSpotifyInterface
                 'headers' => [
                     'Authorization' => 'Bearer ' . $spotifyToken,
                 ],
+                'query' => $params,
             ]);
 
             return json_decode($response->getBody()->getContents(), true);

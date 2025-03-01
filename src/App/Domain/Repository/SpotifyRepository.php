@@ -20,5 +20,13 @@ interface SpotifyRepository
      * @throws FailedSpotifyConnection
      */
     public function getArtist(ArtistId $artistId,  string $spotifyToken): array;
+    /**
+     * @throws BadOrExpiredTokenException
+     * @throws ArtistNotFoundException
+     * @throws BadOAuthRequestException
+     * @throws RateLimitExceededException
+     * @throws FailedSpotifyConnection
+     */
+    public function getArtistAlbums(ArtistId $artistId, string $spotifyToken, ?string $groups, ?string $market, ?int $limit, ?int $offset): array;
 
 }

@@ -23,6 +23,6 @@ interface HttpApiSpotify
      * @throws RateLimitExceededException
      * @throws FailedSpotifyConnection
      */
-    public function get(string $url, string $spotifyToken): array;
+    public function get(string $url, string $spotifyToken, array $params = []): array;
 
 }
