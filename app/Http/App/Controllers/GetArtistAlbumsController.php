@@ -29,6 +29,8 @@ class GetArtistAlbumsController
      *
      * Retrieves the albums of an artist by their ID.
      * Can receive parameters to filter the albums of the artist.
+     *
+     * IMPORTANT: A token obtained from the auth login is required.
      */
     #[PathParameter('id', required: true, type: 'string', example: "0TnOYISbd1XYRBk9myaseg")]
     #[QueryParameter('include_groups', type: 'string', default: "single,appears_on", example: "single,appears_on")]

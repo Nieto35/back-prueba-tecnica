@@ -23,6 +23,7 @@ class LogInController
      * Necessary to make any request, generates the Spotify token and application token.
      * The user must have previously registered, and the user is stored in the database.
      *
+     *   IMPORTANT: It is necessary to have previously created an account in Sign in.
      * @unauthenticated
      */
     #[QueryParameter('email', required: true, type: 'string', format: 'email', example: "user@example.com")]

@@ -25,6 +25,8 @@ class GetArtistController
      * Get artist.
      *
      * Retrieves the information of an artist by their ID.
+     *
+     *  IMPORTANT: A token obtained from the auth login is required.
      */
     #[PathParameter('id', required: true, type: 'string', example: "7GQDI5Vmxs92RsIRZzYT11")]
     public function __invoke(string $id, Request $request, GetArtistAction $action): JsonResponse
