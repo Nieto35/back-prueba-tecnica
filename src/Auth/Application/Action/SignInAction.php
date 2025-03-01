@@ -3,6 +3,7 @@
 namespace Project\Auth\Application\Action;
 
 use Project\Auth\Domain\Exception\FailedToCreateException;
+use Project\Auth\Domain\ValueObject\UserId;
 use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\Exception\UserExistException;
 use Project\Auth\Domain\Repository\UserRepository;
@@ -11,7 +12,6 @@ use Project\Auth\Domain\ValueObject\Date;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;
 use Project\Auth\Domain\ValueObject\Password;
-use Project\Auth\Domain\ValueObject\Token;
 use Ramsey\Uuid\Uuid;
 use Project\Auth\Domain\Mail\UserEmailSender;
 class SignInAction
@@ -36,7 +36,7 @@ class SignInAction
         if ($user) {
             throw new UserExistException("User already exists");
         }
-        $id = new Token(Uuid::uuid4()->toString());
+        $id = new UserId(Uuid::uuid4()->toString());
         $date = new Date(null);
         $user = new User($id, $name, $email, $password, $date);
         $this->userRepository->create($user);
