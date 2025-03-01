@@ -3,6 +3,11 @@
 namespace Project\App\Infrastructure\Repository;
 use Project\App\Domain\Repository\SpotifyRepository as SpotifyRepositoryInterface;
 use Project\App\Domain\ValueObject\ArtistId;
+use Project\App\Domain\ValueObject\AudioBookId;
+use Project\App\Domain\ValueObject\Groups;
+use Project\App\Domain\ValueObject\Limit;
+use Project\App\Domain\ValueObject\Market;
+use Project\App\Domain\ValueObject\Offset;
 use Project\Shared\Domain\Exception\ArtistNotFoundException;
 use Project\Shared\Domain\Exception\BadOAuthRequestException;
 use Project\Shared\Domain\Exception\BadOrExpiredTokenException;
@@ -42,21 +47,39 @@ class SpotifyRepository implements SpotifyRepositoryInterface
      * @throws RateLimitExceededException
      * @throws FailedSpotifyConnection
      */
-    public function getArtistAlbums(ArtistId $artistId, string $spotifyToken, ?string $groups, ?string $market, ?int $limit, ?int $offset): array
+    public function getArtistAlbums(ArtistId $artistId, string $spotifyToken, Groups $groups, Market $market, Limit $limit, Offset $offset): array
     {
         $url = 'https://api.spotify.com/v1/artists/' . $artistId->toString() . '/albums';
         $params = [];
-        if ($groups) {
-            $params['groups'] = $groups;
+        if ($groups->toString()) {
+            $params['groups'] = $groups->toString();
         }
-        if ($market) {
-            $params['market'] = $market;
+        if ($market->toString()) {
+            $params['market'] = $market->toString();
         }
-        if ($limit) {
-            $params['limit'] = $limit;
+        if ($limit->toInt()) {
+            $params['limit'] = $limit->toInt();
         }
-        if ($offset) {
-            $params['offset'] = $offset;
+        if ($offset->toInt()) {
+            $params['offset'] = $offset->toInt();
+        }
+
+        return $this->httpApiSpotify->get($url, $spotifyToken, $params);
+    }
+
+    /**
+     * @throws BadOrExpiredTokenException
+     * @throws ArtistNotFoundException
+     * @throws BadOAuthRequestException
+     * @throws RateLimitExceededException
+     * @throws FailedSpotifyConnection
+     */
+    public function getAudioBook(AudioBookId $audioBookId, string $spotifyToken, Market $market): array
+    {
+        $url = 'https://api.spotify.com/v1/audiobooks/' . $audioBookId->toString();
+        $params = [];
+        if ($market->toString()) {
+            $params['market'] = $market->toString();
         }
 
         return $this->httpApiSpotify->get($url, $spotifyToken, $params);

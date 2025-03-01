@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
 use App\Http\App\Controllers\GetArtistController;
 use App\Http\App\Controllers\GetArtistAlbumsController;
+use App\Http\App\Controllers\GetAudioBookController;
 
 Route::middleware('api')
     ->prefix('api')
@@ -15,6 +16,7 @@ Route::middleware('api')
             ->group(function (Router $router) {
                 $router->get('/{id}/get-artist', '\\'. GetArtistController::class)->name('get-artist-by-id');
                 $router->get('/artists/{id}/albums', '\\'. GetArtistAlbumsController::class)->name('get-artist-albums');
+                $router->get('/{id}/audiobooks', '\\'. GetAudioBookController::class)->name('get-audiobook-by-id');
             });
     });
 // Entrypoint for REACT app

@@ -4,6 +4,11 @@ namespace Project\App\Domain\Repository;
 
 
 use Project\App\Domain\ValueObject\ArtistId;
+use Project\App\Domain\ValueObject\AudioBookId;
+use Project\App\Domain\ValueObject\Groups;
+use Project\App\Domain\ValueObject\Limit;
+use Project\App\Domain\ValueObject\Market;
+use Project\App\Domain\ValueObject\Offset;
 use Project\Shared\Domain\Exception\ArtistNotFoundException;
 use Project\Shared\Domain\Exception\BadOAuthRequestException;
 use Project\Shared\Domain\Exception\BadOrExpiredTokenException;
@@ -27,6 +32,14 @@ interface SpotifyRepository
      * @throws RateLimitExceededException
      * @throws FailedSpotifyConnection
      */
-    public function getArtistAlbums(ArtistId $artistId, string $spotifyToken, ?string $groups, ?string $market, ?int $limit, ?int $offset): array;
+    public function getArtistAlbums(ArtistId $artistId, string $spotifyToken, Groups $groups, Market $market, Limit $limit, Offset $offset): array;
 
+    /**
+     * @throws BadOrExpiredTokenException
+     * @throws ArtistNotFoundException
+     * @throws BadOAuthRequestException
+     * @throws RateLimitExceededException
+     * @throws FailedSpotifyConnection
+     */
+    public function getAudioBook(AudioBookId $audioBookId, string $spotifyToken, Market $market): array;
 }
