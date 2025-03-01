@@ -11,6 +11,8 @@ use Project\Auth\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Password;
 use Dedoc\Scramble\Attributes\QueryParameter;
+use Project\Shared\Domain\Exception\FailedSpotifyConnection;
+
 class LogInController
 {
 
@@ -30,7 +32,9 @@ class LogInController
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         } catch (FailedCacheException $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            return response()->json('Error storing in cache in server', 500);
+        } catch (FailedSpotifyConnection $e) {
+            return response()->json('Error connecting to Spotify server', 500);
         }
 
         return response()->json(['token' => $token->toString()]);

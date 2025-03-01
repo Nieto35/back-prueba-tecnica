@@ -3,7 +3,11 @@
 namespace Project\Shared\Infrastructure\SpotifyHttp;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Project\Shared\Domain\Exception\ArtistNotFoundException;
+use Project\Shared\Domain\Exception\BadOAuthRequestException;
+use Project\Shared\Domain\Exception\BadOrExpiredTokenException;
 use Project\Shared\Domain\Exception\FailedSpotifyConnection;
+use Project\Shared\Domain\Exception\RateLimitExceededException;
 use Project\Shared\Domain\SpotifyHttp\HttpApiSpotify as HttpApiSpotifyInterface;
 
 
@@ -46,6 +50,10 @@ class HttpApiSpotify implements HttpApiSpotifyInterface
     }
 
     /**
+     * @throws ArtistNotFoundException
+     * @throws BadOrExpiredTokenException
+     * @throws BadOAuthRequestException
+     * @throws RateLimitExceededException
      * @throws FailedSpotifyConnection
      */
     public function get(string $url, string $spotifyToken): array
@@ -60,7 +68,19 @@ class HttpApiSpotify implements HttpApiSpotifyInterface
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
-            throw new FailedSpotifyConnection('Failed to get data from Spotify: ' . $e->getMessage());
+            if ($e->getCode() === 400) {
+                throw new ArtistNotFoundException();
+            }
+            if ($e->getCode() === 401) {
+                throw new BadOrExpiredTokenException();
+            }
+            if ($e->getCode() === 403) {
+                throw new BadOAuthRequestException();
+            }
+            if ($e->getCode() === 429) {
+                throw new RateLimitExceededException();
+            }
+            throw new FailedSpotifyConnection();
         }
     }
 

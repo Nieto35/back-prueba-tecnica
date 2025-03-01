@@ -41,7 +41,7 @@ services:
       - 9000
     networks:
       - local-network
-    command: sh -c "/var/www/html/wait-for-it.sh project_mariadb:3306 -- composer install && supervisord -c /etc/supervisor/conf.d/supervisord.conf"
+    command: sh -c "/var/www/html/wait-for-it.sh project_mariadb:3306 -- composer install && php artisan migrate && supervisord -c /etc/supervisor/conf.d/supervisord.conf"
 
   redis:
     image: redis:7.2-alpine
