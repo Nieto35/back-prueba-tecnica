@@ -3,6 +3,7 @@
 namespace Project\Auth\Application\Action;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Project\Auth\Domain\Exception\FailedCacheException;
 use Project\Auth\Domain\Exception\FailedLogInException;
 use Project\Auth\Domain\Exception\InvalidArgumentException;
@@ -10,15 +11,18 @@ use Project\Auth\Domain\Repository\UserRepository;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Password;
 use Project\Auth\Domain\ValueObject\Token;
+use Project\Shared\Domain\SpotifyHttp\HttpApiSpotify;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Hash;
 class LogInAction
 {
     private UserRepository $userRepository;
+    private HttpApiSpotify $httpApiSpotify;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, HttpApiSpotify $httpApiSpotify)
     {
         $this->userRepository = $userRepository;
+        $this->httpApiSpotify = $httpApiSpotify;
     }
 
     /**
@@ -38,11 +42,16 @@ class LogInAction
 
         $token = new Token(Uuid::uuid4()->toString());
 
+        $spotifyToken = $this->httpApiSpotify->getToken();
+
         Cache::put("auth_token:{$token->toString()}", [
             'user_id' => $user->getId()->toString(),
             'name' => $user->getName()->toString(),
-            'email' => $user->getEmail()->toString()
+            'email' => $user->getEmail()->toString(),
+            'spotify_token' => $spotifyToken
         ]);
+
+
 
         $cachedData = Cache::get("auth_token:{$token->toString()}");
         if (!$cachedData) {

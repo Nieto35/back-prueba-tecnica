@@ -10,7 +10,7 @@ Route::middleware('api')
     ->as('api.')
     ->namespace('Api')
     ->group(function (Router $router) {
-        $router->get('/spotify/get-artist-by-id/{id}', '\\'. GetArtistController::class)->name('get-artist-by-id');
+        $router->get('/spotify/{id}/get-artist', '\\'. GetArtistController::class)->name('get-artist-by-id');
     });
 // Entrypoint for REACT app
 Route::get('/{any?}', [AppController::class, 'index'])
