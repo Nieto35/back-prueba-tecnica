@@ -8,11 +8,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Project\Auth\Application\Action\SignInAction;
 use Project\Auth\Domain\Exception\FailedToCreateException;
+use Project\Auth\Domain\ValueObject\UserId;
 use Project\Shared\Domain\Exception\InvalidArgumentException;
 use Project\Auth\Domain\Exception\UserExistException;
 use Project\Auth\Domain\ValueObject\Email;
 use Project\Auth\Domain\ValueObject\Name;
 use Project\Auth\Domain\ValueObject\Password;
+use Ramsey\Uuid\Uuid;
 
 #[Group('Auth')]
 class SignInController
@@ -33,7 +35,8 @@ class SignInController
             $email = new Email($request->input('email'));
             $password = new Password($request->input('password'));
             $name = new Name($request->input('name'));
-            $action->execute($email, $name, $password);
+            $id = new UserId(Uuid::uuid4()->toString());
+            $action->execute($id, $email, $name, $password);
         }catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         } catch (UserExistException $e) {
